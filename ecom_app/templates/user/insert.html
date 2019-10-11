@@ -1,0 +1,151 @@
+{% extends 'index.html' %}
+{% block userurl %}class="active"{% endblock %}
+{% block content %}
+
+<div class="container">
+    <a href="/ecom-admin/user" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Go Back</a>
+<h2>Insert data of new users if you want to...</h2>
+	<form method="POST" action="/ecom-admin/user/inserted/" onsubmit="return successMsg()" id="myform" enctype="multipart/form-data">
+		{% csrf_token %}
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                  <label for="username">Select username:</label>
+                  <input id="username" type="text" class="form-control insert-class" placeholder="Enter user name" name="uname" required autocomplete="off">
+              </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                  <label for="gender">Select Gender:</label>
+                  <select id="gender" class="form-control" name="gender">
+                      <option value="male" selected>male</option>
+                      <option value="female">female</option>
+                  </select>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label for="email">Enter email:</label>
+                    <input id="email" type="email" class="form-control" placeholder="Enter email" name="email" required autocomplete="off">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label for="mobile">Select mobile:</label>
+                    <input id="mobile" type="number" class="form-control insert-class" placeholder="Enter mobile" name="mobile" required autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label for="p1">Enter password:</label>
+	                <input id="p1" type="password" class="form-control insert-class" placeholder="Enter password" name="password" required autocomplete="off">
+	            </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label for="p2">Confirm password:</label>
+	                <input id="p2" type="password" class="form-control" placeholder="Enter password" required autocomplete="off">
+	            </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Enter Address:</label>
+            <textarea id="address" class="form-control insert-class" placeholder="Enter Address" name="address" required autocomplete="off"></textarea>
+	    </div>
+
+        <div class="form-group">
+            <label for="photo">Upload Photo:</label>
+            <input type="file" accept="image/*" data-type='image' id="photo" class="form-control" name="photo" required autocomplete="off" onchange="readURL(this);">
+            <img id="blah" src="" alt="Your Image" style="width:80px;height:80px;background-repeat:no-repeat;background-size:cover;">
+	    </div>
+        <script>
+            function readURL(input)
+            {
+                const file = input.files[0];
+                const  fileType = file['type'];
+                const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+                if (!validImageTypes.includes(fileType) || input.files[0].size > 2000000)
+                {
+                    document.getElementById("photo").value = "";
+                    alert("Please select image having size less than 2 MB only.");
+                    return false;
+                }
+                else
+                {
+                    if (input.files && input.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e)
+                        {
+                            $('#blah').attr('src', e.target.result);
+                        };
+                    reader.readAsDataURL(input.files[0]);
+                    return true;
+                }
+            }}
+        </script>
+
+        <button type="submit" class="btn btn-primary">Insert Data</button>
+	</form>
+</div>
+<script type="text/javascript">
+    function successMsg()
+    {
+        var uname = document.getElementsByClassName("insert-class")[0].value;
+        var mobile = document.getElementsByClassName("insert-class")[1].value;
+        var password = document.getElementsByClassName("insert-class")[2].value;
+        var address = document.getElementsByClassName("insert-class")[3].innerHTML;
+        if(password == document.getElementById("p2").value)
+        {
+            if( uname.trim().length > 1 && uname.trim().length < 41 && mobile.trim().length > 7 && mobile.trim().length < 15 && password.length > 7 )
+            {
+                uname = uname.trim();
+                document.getElementsByClassName("insert-class")[0].value = uname;
+                mobile = mobile.trim();
+                document.getElementsByClassName("insert-class")[1].value = mobile;
+                image1 = readURL(document.getElementById("photo"));
+                if(image1)
+                {
+                    alert("1 row inserted.");
+                }
+                return image1;
+            }
+            else
+            {
+            	alert("Enter data properly.");
+        	    return false;
+      	    }
+        }
+        else
+        {
+        	alert("Enter data properly.");
+        	return false;
+      	}
+    }
+</script>
+
+<!--<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.js"></script>
+<script>
+$("#myform").validate({
+  rules: {
+    fname: {
+      required: true,
+      lettersonly: true
+    }
+  }
+  messages:{
+  	fname: "Please enter valid first name."
+  }
+});
+</script>-->
+
+{% endblock %}

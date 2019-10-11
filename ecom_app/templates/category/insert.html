@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+{% block categoryurl %}class="active"{% endblock %}
+{% block content %}
+
+<div class="container">
+    <a href="/ecom-admin/category" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Go Back</a>
+<h2>Insert new category if you want to...</h2>
+	<form method="POST" action="/ecom-admin/category/inserted/" onsubmit="return successMsg()" id="myform">
+		{% csrf_token %}
+
+        <div class="form-group">
+            <label for="cat">Category Name:</label>
+	        <input id="cat" type="text" class="form-control" name="category" placeholder="Enter category name" required autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Insert Category</button>
+	</form>
+</div>
+<script type="text/javascript">
+    function successMsg()
+    {
+        var cat = document.getElementById("cat").value;
+        if( cat.trim().length > 1 && cat.trim().length < 41 )
+        {
+            cat = cat.trim();
+            document.getElementById("cat").value = cat;
+            alert("1 category added.");
+            return true;
+        }
+        else
+        {
+            alert("Enter data properly.");
+            return false;
+        }
+    }
+</script>
+
+<!--<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.js"></script>
+<script>
+$("#myform").validate({
+  rules: {
+    fname: {
+      required: true,
+      lettersonly: true
+    }
+  }
+  messages:{
+  	fname: "Please enter valid first name."
+  }
+});
+</script>-->
+
+{% endblock %}

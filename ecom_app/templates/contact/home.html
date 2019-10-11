@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% block contact %}class="active"{% endblock %}
+
+{% block total_users %}
+<div class="row">
+ 	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{ total }}</h3>
+              <p>Total Feedback</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <!--<h1>Student Table</h1>-->
+
+  <table class="table table-dark table-bordered table-hover table-striped">
+  	<caption>List of Contact.</caption>
+  	<thead class="thead">
+      <tr>
+         
+          <th>Contact ID</th>
+          
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Eamil</th>
+          <th>Details</th>
+          
+      </tr>
+    </thead>
+  	{% for i in categories %}
+  		<tr>
+  			 
+  			{% for j in i %}
+            <td>{{ j }}</td>
+  			{% endfor %}
+<!--            <td><img src="/static/images{{i.7}}" style="width:80px;height:80px;background-repeat:no-repeat;background-size:cover;"></td>-->
+            {#{% set count = count + 1 %}#}
+  		</tr>
+  	{% endfor %}
+  </table>
+</div>
+
+{% endblock %}

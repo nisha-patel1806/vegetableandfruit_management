@@ -1,0 +1,115 @@
+{% extends 'index.html' %}
+{% block producturl %}class="active"{% endblock %}
+{% block content %}
+
+<div class="container">
+    <a href="/ecom-admin/product" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Go Back</a>
+<h2>Insert data of new product if you want to...</h2>
+	<form method="POST" action="/ecom-admin/product/inserted/" onsubmit="return successMsg()" id="myform" enctype="multipart/form-data">
+		{% csrf_token %}
+        <div class="row">
+          <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+              <label for="productname">Enter product name:</label>
+              <input id="productname" type="text" class="form-control insert-class" placeholder="Enter product name" name="pname" required autocomplete="off">
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <label for="pdetails">Enter product details:</label>
+                <textarea id="pdetails" class="form-control insert-class" placeholder="Enter product details" name="pdetails" required autocomplete="off"></textarea>
+	        </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <label for="pprice">Enter product price:</label>
+                <input type="number" id="pprice" class="form-control insert-class" placeholder="Enter product price" name="pprice" required autocomplete="off">
+	        </div>
+        </div>
+
+        <div class="form-group">
+            <label for="photo">Upload Photo:</label>
+            <input type="file" accept="image/*" data-type='image' id="photo" class="form-control" name="photo" required autocomplete="off" onchange="readURL(this);">
+            <img id="blah" src="" alt="Your Image" style="width:80px;height:80px;background-repeat:no-repeat;background-size:cover;">
+	    </div>
+        <script>
+            function readURL(input)
+            {
+                const file = input.files[0];
+                const  fileType = file['type'];
+                const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+                if (!validImageTypes.includes(fileType) || input.files[0].size > 2000000)
+                {
+                    document.getElementById("photo").value = "";
+                    alert("Please select image having size less than 2 MB only.");
+                    return false;
+                }
+                else
+                {
+                    if (input.files && input.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e)
+                        {
+                            $('#blah').attr('src', e.target.result);
+                        };
+                    reader.readAsDataURL(input.files[0]);
+                    return true;
+                }
+            }}
+        </script>
+
+        <div class="form-group">
+			<label for="category">Select category:</label>
+		    <select id="category" class="form-control" name="category" required>
+                {% for j in categories %}
+                    {% for i in j %}
+                        <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+		</div>
+
+        <button type="submit" class="btn btn-primary">Insert Data</button>
+	</form>
+</div>
+<script type="text/javascript">
+    function successMsg()
+    {
+        var price = document.getElementById("pprice").value;
+        if( price > 0 )
+        {
+            image1 = readURL(document.getElementById("photo"));
+            if(image1)
+            {
+                alert("1 row inserted.");
+            }
+            return image1;
+        }
+        else
+        {
+            alert("Enter data properly.");
+            return false;
+        }
+    }
+</script>
+
+<!--<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.js"></script>
+<script>
+$("#myform").validate({
+  rules: {
+    fname: {
+      required: true,
+      lettersonly: true
+    }
+  }
+  messages:{
+  	fname: "Please enter valid first name."
+  }
+});
+</script>-->
+
+{% endblock %}

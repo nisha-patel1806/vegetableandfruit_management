@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+{% block userurl %}class="active"{% endblock %}
+{% block content %}
+
+<div class="container">
+    <a href="/ecom-admin/user" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Go Back</a>
+<h2>Insert data of new users if you want to...</h2>
+	<form method="POST" action="/ecom-admin/vendor/inserted/" onsubmit="return successMsg()" id="myform" enctype="multipart/form-data">
+		{% csrf_token %}
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                  <label for="username">Select username:</label>
+                  <input id="username" type="text" class="form-control insert-class" placeholder="Enter user name" name="uname" required autocomplete="off">
+              </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                  <label for="gender">Select Gender:</label>
+                  <select id="gender" class="form-control" name="gender">
+                      <option value="male" selected>male</option>
+                      <option value="female">female</option>
+                  </select>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label for="email">Enter email:</label>
+                    <input id="email" type="email" class="form-control" placeholder="Enter email" name="email" required autocomplete="off">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label for="mobile">Select mobile:</label>
+                    <input id="mobile" type="number" class="form-control insert-class" placeholder="Enter mobile" name="mobile" required autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="form-group">
+            <label for="address">Enter Address:</label>
+            <textarea id="address" class="form-control insert-class" placeholder="Enter Address" name="address" required autocomplete="off"></textarea>
+	    </div>
+
+       
+         
+        <button type="submit" class="btn btn-primary">Insert Data</button>
+	</form>
+</div>
+ 
+
+<!--<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.js"></script>
+<script>
+$("#myform").validate({
+  rules: {
+    fname: {
+      required: true,
+      lettersonly: true
+    }
+  }
+  messages:{
+  	fname: "Please enter valid first name."
+  }
+});
+</script>-->
+
+{% endblock %}

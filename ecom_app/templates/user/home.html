@@ -1,0 +1,98 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block userurl %}class="active"{% endblock %}
+{% block total_users %}
+<div class="row">
+ 	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-blue">
+            <div class="inner">
+              <h3>{{ total }}</h3>
+              <p>Total Users</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <!--<h1>Student Table</h1>-->
+<a href="insert" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;Add New</a>
+  <table class="table table-dark table-bordered table-hover table-striped">
+  	<caption>List of users with their data.</caption>
+  	<thead class="thead">
+      <tr>
+          <th class="col-md-2"></th>
+          <th>User ID</th>
+          <th>User Name</th>
+          <th>Gender</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Password</th>
+          <th width="200px">Address</th>
+          <th>Photo</th>
+      </tr>
+    </thead>
+      {#{% set count = 0 %}#}
+  	{% for i in users %}
+  		<tr>
+  			<td>
+  				<!--<div class="form-check">
+          		<input class="form-check-input" type="radio" name="delThis" value='{% for j in i|slice:":1" %}{{j}}{% endfor %}'>
+        		</div>-->
+                <form method="POST" action="" class="inline" onsubmit="return delMsg()">
+                    <input type="hidden" name="operation" value="delete">
+                    <input type="hidden" name="delThis" value='{{i.0}}'>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-trash"></i></button>
+					{% csrf_token %}
+                </form>
+                <script type="text/javascript">
+                    function delMsg()
+                    {
+                        if(confirm("Are you sure about deleting record?"))
+                        {
+                            alert('1 row deleted.');
+                            return true;
+                        }
+                        else
+                            return false;
+                    }
+                </script>
+				<form method="POST" action="edit/" class="inline">
+                    <input type="hidden" name="operation" value="edit">
+                    <input type="hidden" name="editThis" value='{% for j in i|slice:":1" %}{{j}}{% endfor %}'>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+					{% csrf_token %}
+                </form>
+               <!-- <form method="GET" action="active" class="inline">
+                <div class="btn-group" id="status" data-toggle="buttons">
+                    <style>
+                        .btn-default.btn-off.active{background-color: #DA4F49;color: white;}
+                        .btn-default.btn-on.active{background-color: #006FFC;color: white;}
+                    </style>
+                    <input type="hidden" name="activeThis" value='{{ i.0 }}'>
+                    <label class="btn btn-default btn-on btn-sm {% if i.8 == 1 %}active{% endif %}">
+                        <input type="radio" value="1" {% if i.8 == 0 %}name="toggle1" onchange="this.form.submit()"{% endif %}>ON
+                    </label>
+                    <label class="btn btn-default btn-off btn-sm {% if i.8 == 0 %}active{% endif %}">
+                        <input type="radio" value="0" {% if i.8 == 1 %}name="toggle1" onchange="this.form.submit()"{% endif %}>OFF
+                    </label>
+                </div>
+                </form> -->
+  			</td>
+  			{% for j in i|slice:":7" %}
+            <td>{{ j }}</td>
+  			{% endfor %}
+            <td><img src="/static/images{{i.7}}" style="width:80px;height:80px;background-repeat:no-repeat;background-size:cover;"></td>
+            {#{% set count = count + 1 %}#}
+  		</tr>
+  	{% endfor %}
+  </table>
+</div>
+
+{% endblock %}

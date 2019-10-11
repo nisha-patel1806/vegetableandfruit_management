@@ -1,0 +1,103 @@
+{% extends 'index.html' %}
+{% block userurl %}class="active"{% endblock %}
+{% block content %}
+
+<div class="container">
+    <a href="/ecom-admin/product" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Go Back</a>
+<h2>Edit data of product if you want to...</h2>
+	<form method="POST" action="/ecom-admin/product/edited/" onsubmit="return successMsg()" enctype="multipart/form-data">
+		{% csrf_token %}
+      <div class="form-group">
+          <label for="productid">Product ID:</label>
+          <input id="productid" type="text" class="form-control" name="id" value="{{products.0}}" readonly>
+	  </div>
+        <div class="row">
+            <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <label for="pname">Enter product name:</label>
+                <input id="pname" type="text" class="form-control insert-class" placeholder="Enter product name" name="pname" value="{{products.1}}" required autocomplete="off">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <label for="pdetails">Enter product details:</label>
+                <textarea id="pdetails" class="form-control insert-class" placeholder="Enter product details" name="pdetails" required autocomplete="off">{{products.2}}</textarea>
+	        </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <label for="pprice">Enter product price:</label>
+                <input type="number" id="pprice" class="form-control insert-class" placeholder="Enter product price" name="pprice" value="{{products.3}}" required autocomplete="off">
+	        </div>
+        </div>
+
+        <div class="form-group">
+			<label for="category">Select category:</label>
+		    <select id="category" class="form-control" name="category" required>
+                {% for j in categories %}
+                    {% for i in j %}
+                        <option value="{{i}}" {% if products.4 == i %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+		</div>
+
+        <div class="form-group">
+          <label for="photo">Change Photo:</label>
+          <input type="file" accept="image/*" data-type='image' id="photo" class="form-control" autocomplete="off" onchange="readURL(this);">
+            <img id="blah" src="/static/images{{products.5}}" alt="Your Image" style="width:80px;height:80px;background-repeat:no-repeat;background-size:cover;">
+	    </div>
+        <script>
+            function readURL(input)
+            {
+                document.getElementById('photo').required = 'required';
+                document.getElementById('photo').name = 'photo';
+                const file = input.files[0];
+                const  fileType = file['type'];
+                const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+                if (!validImageTypes.includes(fileType) || input.files[0].size > 2000000)
+                {
+                    document.getElementById('photo').name = '';
+                    document.getElementById("photo").value = "";
+                    alert("Please select image only.");
+                    return false;
+                }
+                else
+                {
+                    if (input.files && input.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e)
+                        {
+                            $('#blah').attr('src', e.target.result);
+                        };
+                    reader.readAsDataURL(input.files[0]);
+                    return true;
+                }
+            }}
+        </script>
+        <button type="submit" class="btn btn-primary">Edit Data</button>
+
+	</form>
+</div>
+<!--<style>
+    input{
+        text-transform : capitalize;
+    }
+</style>-->
+<script type="text/javascript">
+    function successMsg()
+    {
+        var pic = document.getElementById('photo').value;
+        if(pic == '')
+        {
+            document.getElementById('photo').name = '';
+        }
+        var pname = document.getElementById("pname").value;
+        var pdetails = document.getElementById("pdetails").innerHTML;
+        var pprice = document.getElementById("pprice").value;
+        
+    }
+</script>
+{% endblock %}

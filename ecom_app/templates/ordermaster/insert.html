@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="container">
+    <a href="/ecom-admin/product" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Go Back</a>
+<h2>Insert data of new product if you want to...</h2>
+	<form method="POST" action="/ecom-admin/order-master/inserted/" onsubmit="return successMsg()" id="myform" enctype="multipart/form-data">
+		{% csrf_token %}
+       
+       
+        <div class="row">
+          <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+              <label for="productname">Date:</label>
+              <input id="productname" type="date" class="form-control insert-class" placeholder="Enter data" name="order_date" required autocomplete="off">
+          </div>
+        </div>
+ <div class="row">
+          <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+              <label for="productname">User</label>
+              <input id="productname" type="text" class="form-control insert-class" placeholder="Enter data" name="user_id" required autocomplete="off">
+          </div>
+        </div>
+         <div class="row">
+          <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+              <label for="productname">Status</label>
+              <input id="productname" type="text" class="form-control insert-class" placeholder="Enter data" name="order_status" required autocomplete="off">
+          </div>
+        </div>
+         
+
+       
+        
+       
+
+      
+
+        <button type="submit" class="btn btn-primary">Insert Data</button>
+	</form>
+</div>
+
+
+<!--<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.js"></script>
+<script>
+$("#myform").validate({
+  rules: {
+    fname: {
+      required: true,
+      lettersonly: true
+    }
+  }
+  messages:{
+  	fname: "Please enter valid first name."
+  }
+});
+</script>-->
+
+{% endblock %}

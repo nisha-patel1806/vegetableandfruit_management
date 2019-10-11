@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% block ordermasterurl %}class="active"{% endblock %}
+{% block content %}
+
+<h1>Order Master</h1>
+
+<div class="container">
+  <!--<h1>Student Table</h1>-->
+<!--<a href="insert" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;Add New</a> -->
+  <table class="table table-dark table-bordered table-hover table-striped">
+  	<caption>List of Orders.</caption>
+  	<thead class="thead">
+      <tr>
+        
+          <th>ID</th>
+          <th>Date</th>
+           <th>UserID</th>
+           
+            
+      </tr>
+    </thead>
+  	{% for i in categories %}
+  		<tr>
+  		
+  			{% for j in i %}
+            <td>{{ j }}</td>
+  			{% endfor %}
+<!--            <td><img src="/static/images{{i.7}}" style="width:80px;height:80px;background-repeat:no-repeat;background-size:cover;"></td>-->
+            {#{% set count = count + 1 %}#}
+
+            
+  		</tr>
+  	{% endfor %}
+  </table>
+</div>
+
+
+
+
+{% endblock %}
